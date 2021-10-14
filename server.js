@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require('morgan');
 const cors = require("cors");
+const covidRoute = require("./routes/covid");
 // App Config...
 const app = express();                  // instanciating express() in app variable
 dotenv.config();                        // to use .env variables
@@ -13,6 +14,8 @@ const Port = process.env.Port || 4000;
 app.use(express.json());
 app.use(morgan("common"));
 app.use(cors());
+
+app.use("/covid_api" , covidRoute);
 
 const bot = new Telegraf("2015554624:AAFzmALvIYWw2tSNX0JHPKBbDmNHhSXVM-Y");
 

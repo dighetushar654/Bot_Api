@@ -5,16 +5,7 @@ const covidSchema = new mongoose.Schema({
     quetion: {
         type:String,
     },
-    optionA: {
-        type:String
-    },
-    optionB: {
-        type:String
-    },
-    optionC: {
-        type:String
-    },
-    optionD: {
+    userResponse: {
         type:String
     },
 },
