@@ -8,7 +8,7 @@ const covidRoute = require("./routes/covid");
 // App Config...
 const app = express();                  // instanciating express() in app variable
 dotenv.config();                        // to use .env variables
-const Port = process.env.Port || 4000;
+const PORT = process.env.PORT || 4000;
 
 // Middlewares
 app.use(express.json());
@@ -125,7 +125,7 @@ app.get("/", (req, res) => {
     res.status(200).json("Hello From Covid_API Server");
 });
 
-//Port for listening
-app.listen(Port, () => {
-    console.log(`Server Running On Port ${Port}`);
+//PORT for listening
+app.listen(PORT, () => {
+    console.log(`Server Running On Port ${PORT}`);
 })
