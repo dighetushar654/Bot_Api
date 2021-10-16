@@ -1,6 +1,7 @@
 const { schema } = require("../models/covid_Model");
 const mongoose = require("mongoose");
 const Covid = mongoose.model('Covid', schema);
+
 //create covid
 exports.create_covid = async (req, res) => {
     try {
