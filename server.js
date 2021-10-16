@@ -17,6 +17,7 @@ app.use(cors());
 
 app.use("/covid_api" , covidRoute);
 
+// Telegraf Config
 const bot = new Telegraf("2015554624:AAFzmALvIYWw2tSNX0JHPKBbDmNHhSXVM-Y");
 
 // bot.use((ctx) => {
@@ -24,8 +25,14 @@ const bot = new Telegraf("2015554624:AAFzmALvIYWw2tSNX0JHPKBbDmNHhSXVM-Y");
 // })
 
 bot.start((ctx) => {
-    ctx.reply("The Bot Has Started!!")
+    let name = ctx.from.first_name
+    ctx.reply(`Hi, ${name} Where are you from?`)
 })
+
+bot.command('restart', (ctx) => {
+    let name = ctx.from.first_name
+    ctx.reply(`Hi, ${name} Where are you from?`)}
+)
 
 bot.help((ctx) => {
     ctx.reply("This Bot Perform Following Commands\n - /start\n - /help");
@@ -41,15 +48,76 @@ bot.command('say', (ctx) => {
     ctx.reply("Say Something !!!");
 })
 
-bot.launch()
+bot.on('text', (ctx) => {
+    ctx.reply(`How many vaccines are you taken?`,{
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: 'one', callback_data: 'one' },
+                ],
+                [
+                    { text: 'two', callback_data: 'two' },
+                ]
+            ]
+        }
+    })
+})
 
-// DB Config
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+bot.action('one', ctx => {
+    console.log(ctx.from)
+    let response = `Do you have any symptons?`;
+    ctx.deleteMessage();
+    ctx.reply(response, {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: "Yes", callback_data: 'yes' },
+                ],
+                [
+                    { text: "No", callback_data: 'no' },
+                ],
+            ]
+        }
+    })
+})
 
-}).then ( () => console.log("MongoDB Connected"))
-.catch ( (err) => console.log(err)); 
+bot.action('yes', ctx => {
+    console.log(ctx.from)
+    let response = `Do you have any symptons?`;
+    ctx.deleteMessage();
+    ctx.reply(response, {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: "cough", callback_data: 'cough' },
+                ],
+                [
+                    { text: "fever", callback_data: 'fever' },
+                ],
+            ]
+        }
+    })
+})
+
+bot.action('fever', ctx => {
+    let response = `Take a cosfils if cough increases contact to doctor`;
+    ctx.deleteMessage();
+    ctx.reply(response)
+})
+
+bot.action('cough', ctx => {
+    let response = `Take a cosfils if cough increases contact to doctor`;
+    ctx.deleteMessage();
+    ctx.reply(response)
+})
+
+bot.action('two', ctx => {
+    let response = `Congrats you are full vaccinated! but fight is not over yet `;
+    ctx.deleteMessage();
+    ctx.reply(response)
+})
+
+bot.launch();
 
 
 //Default Route

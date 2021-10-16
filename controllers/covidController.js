@@ -4,6 +4,7 @@ const Covid = mongoose.model('Covid', schema);
 //create covid
 exports.create_covid = async (req, res) => {
     try {
+        
     
     } catch (err) {
         console.log(err);
